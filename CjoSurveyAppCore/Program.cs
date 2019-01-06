@@ -12,7 +12,8 @@ namespace CjoSurveyApp
         static void Main(string[] args)
         {
             MyComPort comPort = new MyComPort();
-            Task startPolling = Task.Factory.StartNew(() => comPort.ListenForData(comPort.ComPort));
+            comPort.PropertyChanged += ComPort_PropertyChanged;
+            Task startPolling = Task.Factory.StartNew(() => comPort.PollData(comPort.ComPort)); 
 
             comPort.EndPoll = Console.ReadLine();
 
@@ -27,6 +28,11 @@ namespace CjoSurveyApp
                 throw;
             }
             Console.ReadKey();
+        }
+
+        private static void ComPort_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            Console.WriteLine((sender as MyComPort).Package.ToString()); 
         }
     }
 }
