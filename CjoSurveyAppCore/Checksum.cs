@@ -14,7 +14,7 @@ namespace CjoSurveyAppCore
             int ckB = 0;
             bool correctChecksum = false;
             
-            for (int i = 2; i < message.Length - 3; i++)
+            for (int i = 2; i < message.Length - 2; i++)
             {
                 ckA += message[i];
                 ckB += ckA;

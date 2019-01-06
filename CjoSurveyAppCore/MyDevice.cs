@@ -36,10 +36,17 @@ namespace CjoSurveyApp
                     {
                         RegistryKey rk3 = rk2.OpenSubKey(s);
                         var subKey1 = rk3.GetSubKeyNames();
-
-                        RegistryKey rk4 = rk3.OpenSubKey(subKey1[0]);
-                        RegistryKey rk5 = rk4.OpenSubKey("Device Parameters");
-                        port = rk5.GetValue("PortName").ToString();
+                        foreach (var item in subKey1)
+                        {
+                            RegistryKey rk4 = rk3.OpenSubKey(item);
+                            if (rk4.OpenSubKey("Device Parameters").GetValue("PortName") != null)
+                            {
+                                port = rk4.OpenSubKey("Device Parameters").GetValue("PortName").ToString();
+                            }
+                        }
+                        //RegistryKey rk4 = rk3.OpenSubKey(subKey1[0]);
+                        //RegistryKey rk5 = rk4.OpenSubKey("Device Parameters");
+                        //port = rk5.GetValue("PortName").ToString();
                     }
                 }
             }
